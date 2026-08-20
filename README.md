@@ -1,0 +1,2 @@
+# unity-bullet-shooter
+Unity/C#で開発した縦スクロール弾幕シューティングゲーム。ScriptableObjectによるデータ駆動設計とオブジェクトプーリングを実装した個人開発作品です。
