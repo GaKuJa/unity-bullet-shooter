@@ -353,6 +353,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1577878462
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1577878463}
+  m_Layer: 0
+  m_Name: BulletContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1577878463
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1577878462}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &6913769346951840105
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -365,6 +396,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5992627158255070325, guid: 34e6dfe347475384f8dc1d93df4954fb, type: 3}
+      propertyPath: poolContainer
+      value: 
+      objectReference: {fileID: 1577878463}
     - target: {fileID: 6708521982274220080, guid: 34e6dfe347475384f8dc1d93df4954fb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -421,4 +456,5 @@ SceneRoots:
   - {fileID: 689283402}
   - {fileID: 194677593}
   - {fileID: 6913769346951840105}
+  - {fileID: 1577878463}
   - {fileID: 1218570133}

@@ -1,3 +1,4 @@
+using Shooter.Bullets;
 using Shooter.Input;
 using UnityEngine;
 using Zenject;
@@ -9,6 +10,7 @@ namespace Shooter.Player
         private IInputReader inputReader;
 
         [SerializeField] private Mover mover;
+        [SerializeField] private BulletShooter shooter;
 
         [Inject]
         public void Construct(IInputReader inputReader)
@@ -19,6 +21,11 @@ namespace Shooter.Player
         private void Update()
         {
             mover.Move(inputReader.MoveDirection, Time.deltaTime);
+
+            if (inputReader.IsFiring)
+            {
+                shooter.Fire();
+            }
         }
     }
 }
