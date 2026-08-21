@@ -10,7 +10,7 @@ namespace Shooter.Core
 
         public override void InstallBindings()
         {
-            Container.Bind<InputReader>().FromInstance(inputReader);
+            Container.Bind<IInputReader>().FromInstance(inputReader);
         }
     }
 }

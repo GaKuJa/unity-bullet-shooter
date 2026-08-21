@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 namespace Shooter.Input
 {
-    public class InputReader : MonoBehaviour
+    public class InputReader : MonoBehaviour, IInputReader
     {
         public Vector2 MoveDirection { get; private set; }
         public bool IsFiring { get; private set; }

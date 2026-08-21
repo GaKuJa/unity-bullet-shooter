@@ -6,12 +6,12 @@ namespace Shooter.Test
 {
     public class InputReaderLogger : MonoBehaviour
     {
-        private InputReader inputReader;
+        private IInputReader inputReader;
         private Vector2 lastLoggedDirection;
         private bool lastLoggedFiring;
 
         [Inject]
-        public void Construct(InputReader inputReader)
+        public void Construct(IInputReader inputReader)
         {
             this.inputReader = inputReader;
         }
