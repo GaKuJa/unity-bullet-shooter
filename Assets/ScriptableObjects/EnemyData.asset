@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04365957f261358469f1d10bf53bb489, type: 3}
   m_Name: EnemyData
   m_EditorClassIdentifier: Assembly-CSharp::Shooter.Data.EnemyData
-  moveSpeed: 2
+  _moveSpeed: 2
+  _fireInterval: 0.2

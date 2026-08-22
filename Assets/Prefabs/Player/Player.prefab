@@ -170,8 +170,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a464d7e4709b70d48812ddcbfa864849, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Shooter.Player.PlayerController
-  mover: {fileID: 7516396036526992470}
-  shooter: {fileID: 5992627158255070325}
+  _data: {fileID: 11400000, guid: 222c768df63f9b44ba311a051e5af4fe, type: 2}
+  _mover: {fileID: 7516396036526992470}
+  _shooter: {fileID: 5992627158255070325}
 --- !u!114 &7516396036526992470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,8 +185,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2eccff97ea218c4986e353f6743b710, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Shooter.Player.Mover
-  speed: 5
-  viewCamera: {fileID: 0}
+  _speed: 5
+  _viewCamera: {fileID: 0}
 --- !u!114 &5992627158255070325
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,8 +199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d34355aa8014027458d5d6079b176af4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Shooter.Bullets.BulletShooter
-  pattern: {fileID: 11400000, guid: fee08e38787e1c34ea4fda9aa04deb03, type: 2}
-  firePoint: {fileID: 2796975121944454043}
-  bulletPrefab: {fileID: 1873913138215813688, guid: 2fbd1224ee70044489826c8c916b6209, type: 3}
-  poolContainer: {fileID: 0}
-  poolInitialSize: 20
+  _bulletPrefab: {fileID: 5227068493819044965, guid: 2fbd1224ee70044489826c8c916b6209, type: 3}
+  _container: {fileID: 0}
+  _firePoint: {fileID: 2796975121944454043}
+  _initialSize: 10

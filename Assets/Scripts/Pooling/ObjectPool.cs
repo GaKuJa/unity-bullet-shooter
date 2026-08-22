@@ -8,14 +8,12 @@ namespace Shooter.Pooling
     {
         private readonly T _prefab;
         private readonly Transform _parent;
-        private readonly Action<T> _onCreated;
         private readonly Queue<T> _availableInstances = new Queue<T>();
 
-        public ObjectPool(T prefab, Transform parent, int initialSize, Action<T> onCreated = null)
+        public ObjectPool(T prefab, Transform parent, int initialSize)
         {
             _prefab = prefab;
             _parent = parent;
-            _onCreated = onCreated;
 
             for (int i = 0; i < initialSize; i++)
             {
@@ -30,17 +28,16 @@ namespace Shooter.Pooling
             return instance;
         }
 
-        public void Return(T instance)
+        protected void Return(T instance)
         {
             instance.gameObject.SetActive(false);
             _availableInstances.Enqueue(instance);
         }
 
-        private T CreateInstance()
+        protected virtual T CreateInstance()
         {
             T instance = UnityEngine.Object.Instantiate(_prefab, _parent);
             instance.gameObject.SetActive(false);
-            _onCreated?.Invoke(instance);
             return instance;
         }
     }

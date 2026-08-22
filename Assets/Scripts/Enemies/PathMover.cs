@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Shooter.Enemies
+namespace Shooter.Enemy
 {
     public class PathMover : MonoBehaviour
     {

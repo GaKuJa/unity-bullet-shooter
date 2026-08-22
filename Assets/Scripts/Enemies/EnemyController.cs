@@ -1,22 +1,17 @@
-using Shooter.Bullets;
 using Shooter.Data;
 using Shooter.Player;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
-namespace Shooter.Enemies
+namespace Shooter.Enemy
 {
     public class EnemyController : MonoBehaviour
     {
-        [FormerlySerializedAs("data")]
         [SerializeField] private EnemyData _data;
 
-        [FormerlySerializedAs("mover")]
         [SerializeField] private PathMover _mover;
 
-        [FormerlySerializedAs("shooter")]
-        [SerializeField] private BulletShooter _shooter;
+        [SerializeField] private EnemyBulletShooter _shooter;
 
         private Transform _playerTransform;
 
@@ -29,6 +24,8 @@ namespace Shooter.Enemies
         private void Awake()
         {
             _mover.Initialize(_data.MoveSpeed);
+            _shooter.Initialize(_playerTransform);
+            _shooter.SetFireInterval(_data.FireInterval);
         }
 
         private void Start()
@@ -38,7 +35,7 @@ namespace Shooter.Enemies
 
         private void Update()
         {
-            _shooter.Fire(_playerTransform.position);
+            _shooter.Fire();
         }
     }
 }

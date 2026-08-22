@@ -1,7 +1,6 @@
-using Shooter.Bullets;
+using Shooter.Data;
 using Shooter.Input;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 namespace Shooter.Player
@@ -10,16 +9,21 @@ namespace Shooter.Player
     {
         private IInputReader _inputReader;
 
-        [FormerlySerializedAs("mover")]
+        [SerializeField] private PlayerData _data;
+
         [SerializeField] private Mover _mover;
 
-        [FormerlySerializedAs("shooter")]
-        [SerializeField] private BulletShooter _shooter;
+        [SerializeField] private PlayerBulletShooter _shooter;
 
         [Inject]
         public void Construct(IInputReader inputReader)
         {
             _inputReader = inputReader;
+        }
+
+        private void Awake()
+        {
+            _shooter.SetFireInterval(_data.FireInterval);
         }
 
         private void Update()

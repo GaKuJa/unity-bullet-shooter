@@ -1,20 +1,20 @@
 using Shooter.Core;
 using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Shooter.Bullets
 {
-    public abstract class BulletBase : MonoBehaviour
+    public class BulletBase : MonoBehaviour
     {
         [SerializeField] private int _damage = 1;
 
-        [FormerlySerializedAs("Speed")]
         [SerializeField] protected float _speed = 10f;
 
         private Camera _viewCamera;
-        private Action<BulletBase> _onDespawned;
-        private bool _hasDespawned;
+
+        public event Action<BulletBase> OnDespawned;
+
+        private bool _hasFireRequest;
 
         private void Awake()
         {
@@ -23,6 +23,13 @@ namespace Shooter.Bullets
 
         protected virtual void Update()
         {
+            if (!_hasFireRequest)
+            {
+                return;
+            }
+
+            transform.position += transform.up * _speed * Time.deltaTime;
+
             if (IsOffScreen())
             {
                 Despawn();
@@ -40,25 +47,20 @@ namespace Shooter.Bullets
             Despawn();
         }
 
-        public void Initialize(Action<BulletBase> despawnedCallback)
+        public virtual void Fire()
         {
-            _onDespawned = despawnedCallback;
-        }
-
-        public void Launch()
-        {
-            _hasDespawned = false;
+            _hasFireRequest = true;
         }
 
         private void Despawn()
         {
-            if (_hasDespawned)
+            if (!_hasFireRequest)
             {
                 return;
             }
 
-            _hasDespawned = true;
-            _onDespawned?.Invoke(this);
+            _hasFireRequest = false;
+            OnDespawned?.Invoke(this);
         }
 
         private bool IsOffScreen()
