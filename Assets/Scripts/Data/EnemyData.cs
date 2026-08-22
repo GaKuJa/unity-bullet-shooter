@@ -1,12 +1,14 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Shooter.Data
 {
     [CreateAssetMenu(fileName = "EnemyData", menuName = "Bullet Shooter/Enemy Data")]
     public class EnemyData : ScriptableObject
     {
-        [SerializeField] private float moveSpeed = 2f;
+        [FormerlySerializedAs("moveSpeed")]
+        [SerializeField] private float _moveSpeed = 2f;
 
-        public float MoveSpeed => moveSpeed;
+        public float MoveSpeed => _moveSpeed;
     }
 }

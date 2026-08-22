@@ -1,30 +1,34 @@
 using Shooter.Bullets;
 using Shooter.Input;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace Shooter.Player
 {
     public class PlayerController : MonoBehaviour
     {
-        private IInputReader inputReader;
+        private IInputReader _inputReader;
 
-        [SerializeField] private Mover mover;
-        [SerializeField] private BulletShooter shooter;
+        [FormerlySerializedAs("mover")]
+        [SerializeField] private Mover _mover;
+
+        [FormerlySerializedAs("shooter")]
+        [SerializeField] private BulletShooter _shooter;
 
         [Inject]
         public void Construct(IInputReader inputReader)
         {
-            this.inputReader = inputReader;
+            _inputReader = inputReader;
         }
 
         private void Update()
         {
-            mover.Move(inputReader.MoveDirection, Time.deltaTime);
+            _mover.Move(_inputReader.MoveDirection, Time.deltaTime);
 
-            if (inputReader.IsFiring)
+            if (_inputReader.IsFiring)
             {
-                shooter.Fire();
+                _shooter.Fire();
             }
         }
     }

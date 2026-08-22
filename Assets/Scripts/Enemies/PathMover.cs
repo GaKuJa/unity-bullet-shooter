@@ -1,56 +1,58 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Shooter.Enemies
 {
     public class PathMover : MonoBehaviour
     {
-        [SerializeField] private Transform[] waypoints;
+        [FormerlySerializedAs("waypoints")]
+        [SerializeField] private Transform[] _waypoints;
 
-        private Vector3[] pathPoints;
-        private float speed;
-        private int targetPointIndex;
-        private bool isMoving;
+        private Vector3[] _pathPoints;
+        private float _speed;
+        private int _targetPointIndex;
+        private bool _isMoving;
 
         public void Initialize(float moveSpeed)
         {
-            speed = moveSpeed;
-            targetPointIndex = 0;
+            _speed = moveSpeed;
+            _targetPointIndex = 0;
 
-            pathPoints = new Vector3[waypoints.Length];
-            for (int i = 0; i < waypoints.Length; i++)
+            _pathPoints = new Vector3[_waypoints.Length];
+            for (int i = 0; i < _waypoints.Length; i++)
             {
-                pathPoints[i] = waypoints[i].position;
+                _pathPoints[i] = _waypoints[i].position;
             }
 
-            if (pathPoints.Length > 0)
+            if (_pathPoints.Length > 0)
             {
-                transform.position = pathPoints[0];
+                transform.position = _pathPoints[0];
             }
         }
 
         public void MoveStart()
         {
-            isMoving = true;
+            _isMoving = true;
         }
 
         private void Update()
         {
-            if (!isMoving)
+            if (!_isMoving)
             {
                 return;
             }
 
-            if (targetPointIndex >= pathPoints.Length)
+            if (_targetPointIndex >= _pathPoints.Length)
             {
                 return;
             }
 
-            Vector3 targetPosition = pathPoints[targetPointIndex];
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+            Vector3 targetPosition = _pathPoints[_targetPointIndex];
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, _speed * Time.deltaTime);
 
             if (transform.position == targetPosition)
             {
-                targetPointIndex++;
+                _targetPointIndex++;
             }
         }
     }
