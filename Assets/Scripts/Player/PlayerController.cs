@@ -1,11 +1,13 @@
+using Shooter.Core;
 using Shooter.Data;
 using Shooter.Input;
+using Shooter.UI;
 using UnityEngine;
 using Zenject;
 
 namespace Shooter.Player
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoBehaviour, IDamageable
     {
         private IInputReader _inputReader;
 
@@ -14,6 +16,12 @@ namespace Shooter.Player
         [SerializeField] private Mover _mover;
 
         [SerializeField] private PlayerBulletShooter _shooter;
+
+        [SerializeField] private HealthGaugeView _healthGauge;
+
+        private readonly HealthModel _health = new HealthModel();
+
+        public IHealthModel Health => _health;
 
         [Inject]
         public void Construct(IInputReader inputReader)
@@ -24,6 +32,8 @@ namespace Shooter.Player
         private void Awake()
         {
             _shooter.SetFireInterval(_data.FireInterval);
+            _health.Initialize(_data.MaxHealth);
+            _healthGauge.Bind(_health);
         }
 
         private void Update()
@@ -34,6 +44,11 @@ namespace Shooter.Player
             {
                 _shooter.Fire();
             }
+        }
+
+        public void TakeDamage(int amount)
+        {
+            _health.DecrementHp(amount);
         }
     }
 }
