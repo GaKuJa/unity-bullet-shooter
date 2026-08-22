@@ -19,14 +19,14 @@ namespace Shooter.Enemy
 
         private readonly HealthModel _health = new HealthModel();
 
-        public IHealthModel Health => _health;
-
         private Transform _playerTransform;
+        private IHealthModel _playerHealth;
 
         [Inject]
         public void Construct(PlayerController player)
         {
             _playerTransform = player.transform;
+            _playerHealth = player.Health;
         }
 
         private void Awake()
@@ -45,7 +45,10 @@ namespace Shooter.Enemy
 
         private void Update()
         {
-            _shooter.Fire();
+            if (!_playerHealth.IsDead)
+            {
+                _shooter.Fire();
+            }
         }
 
         public void TakeDamage(int amount)

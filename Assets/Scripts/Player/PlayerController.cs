@@ -34,6 +34,7 @@ namespace Shooter.Player
             _shooter.SetFireInterval(_data.FireInterval);
             _health.Initialize(_data.MaxHealth);
             _healthGauge.Bind(_health);
+            _health.OnDied += HandleDied;
         }
 
         private void Update()
@@ -49,6 +50,17 @@ namespace Shooter.Player
         public void TakeDamage(int amount)
         {
             _health.DecrementHp(amount);
+        }
+
+        public void Respawn()
+        {
+            gameObject.SetActive(true);
+            _health.Revive();
+        }
+
+        private void HandleDied()
+        {
+            gameObject.SetActive(false);
         }
     }
 }
