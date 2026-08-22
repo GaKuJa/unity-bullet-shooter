@@ -1,31 +1,66 @@
-using Shooter.Bullets;
+using Shooter.Core;
+using Shooter.Data;
 using Shooter.Input;
+using Shooter.UI;
 using UnityEngine;
 using Zenject;
 
 namespace Shooter.Player
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoBehaviour, IDamageable
     {
-        private IInputReader inputReader;
+        private IInputReader _inputReader;
 
-        [SerializeField] private Mover mover;
-        [SerializeField] private BulletShooter shooter;
+        [SerializeField] private PlayerData _data;
+
+        [SerializeField] private Mover _mover;
+
+        [SerializeField] private PlayerBulletShooter _shooter;
+
+        [SerializeField] private HealthGaugeView _healthGauge;
+
+        private readonly HealthModel _health = new HealthModel();
+
+        public IHealthModel Health => _health;
 
         [Inject]
         public void Construct(IInputReader inputReader)
         {
-            this.inputReader = inputReader;
+            _inputReader = inputReader;
+        }
+
+        private void Awake()
+        {
+            _shooter.SetFireInterval(_data.FireInterval);
+            _health.Initialize(_data.MaxHealth);
+            _healthGauge.Bind(_health);
+            _health.OnDied += HandleDied;
         }
 
         private void Update()
         {
-            mover.Move(inputReader.MoveDirection, Time.deltaTime);
+            _mover.Move(_inputReader.MoveDirection, Time.deltaTime);
 
-            if (inputReader.IsFiring)
+            if (_inputReader.IsFiring)
             {
-                shooter.Fire();
+                _shooter.Fire();
             }
+        }
+
+        public void TakeDamage(int amount)
+        {
+            _health.DecrementHp(amount);
+        }
+
+        public void Respawn()
+        {
+            gameObject.SetActive(true);
+            _health.Revive();
+        }
+
+        private void HandleDied()
+        {
+            gameObject.SetActive(false);
         }
     }
 }

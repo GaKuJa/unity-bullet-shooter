@@ -6,41 +6,38 @@ namespace Shooter.Pooling
 {
     public class ObjectPool<T> where T : Component
     {
-        private readonly T prefab;
-        private readonly Transform parent;
-        private readonly Action<T> onCreated;
-        private readonly Queue<T> availableInstances = new Queue<T>();
+        private readonly T _prefab;
+        private readonly Transform _parent;
+        private readonly Queue<T> _availableInstances = new Queue<T>();
 
-        public ObjectPool(T prefab, Transform parent, int initialSize, Action<T> onCreated = null)
+        public ObjectPool(T prefab, Transform parent, int initialSize)
         {
-            this.prefab = prefab;
-            this.parent = parent;
-            this.onCreated = onCreated;
+            _prefab = prefab;
+            _parent = parent;
 
             for (int i = 0; i < initialSize; i++)
             {
-                availableInstances.Enqueue(CreateInstance());
+                _availableInstances.Enqueue(CreateInstance());
             }
         }
 
         public T Rent()
         {
-            T instance = availableInstances.Count > 0 ? availableInstances.Dequeue() : CreateInstance();
+            T instance = _availableInstances.Count > 0 ? _availableInstances.Dequeue() : CreateInstance();
             instance.gameObject.SetActive(true);
             return instance;
         }
 
-        public void Return(T instance)
+        protected void Return(T instance)
         {
             instance.gameObject.SetActive(false);
-            availableInstances.Enqueue(instance);
+            _availableInstances.Enqueue(instance);
         }
 
-        private T CreateInstance()
+        protected virtual T CreateInstance()
         {
-            T instance = UnityEngine.Object.Instantiate(prefab, parent);
+            T instance = UnityEngine.Object.Instantiate(_prefab, _parent);
             instance.gameObject.SetActive(false);
-            onCreated?.Invoke(instance);
             return instance;
         }
     }
